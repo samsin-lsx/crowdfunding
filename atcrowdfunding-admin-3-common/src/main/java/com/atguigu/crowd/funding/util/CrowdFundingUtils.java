@@ -14,7 +14,7 @@ public class CrowdFundingUtils {
 	}
 
 	/**
-	 * 使用MD5算法加密
+	 * 使用
 	 * @param source
 	 * @return
 	 */
