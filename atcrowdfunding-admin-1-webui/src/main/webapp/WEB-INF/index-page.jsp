@@ -225,11 +225,8 @@ h3.break>a {
 					</div>
 				</div>
 			</nav>
-
 		</div>
 	</div>
-
-
 	<!-- Carousel
     ================================================== -->
 	<div id="myCarousel" class="carousel slide" data-ride="carousel">

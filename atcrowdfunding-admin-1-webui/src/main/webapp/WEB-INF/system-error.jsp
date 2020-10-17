@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="UTF-8">
 <head>
@@ -26,23 +25,15 @@
 		</div>
 	</nav>
 	<div class="container">
-		<form action="admin/do/login.html" class="form-signin" role="form">
-			<h2 class="form-signin-heading">
-				<i class="glyphicon glyphicon-log-in"></i> 管理员登录
-			</h2>
-			<p>${requestScope.MESSAGE}</p>
-			<div class="form-group has-success has-feedback">
-				<input type="text" class="form-control" id="inputSuccess4" name="loginAcct" placeholder="请输入登录账号"  value="laoli222" autofocus> 
-				<span class="glyphicon glyphicon-user form-control-feedback"></span>
-			</div>
-			<div class="form-group has-success has-feedback">
-				<input type="text" class="form-control" id="inputSuccess4" name="userPswd" placeholder="请输入登录密码" value="123123" style="margin-top: 10px;">
-				<span class="glyphicon glyphicon-lock form-control-feedback"></span>
-			</div>
-			<button class="btn btn-lg btn-success btn-block" style="outline: none;">登录</button>
-		</form>
+		<h1 align="center">${requestScope.exception.message}</h1>
+		<button class="btn btn-lg btn-success btn-block" id="backBtn" style="outline: none;">后退</button>
 	</div>
 	<script src="jquery/jquery-2.1.1.min.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script>
+		$("#backBtn").click(function() {
+			window.history.back();
+		});
+	</script>
 </body>
 </html>

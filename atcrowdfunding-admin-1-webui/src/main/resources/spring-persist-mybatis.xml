@@ -23,6 +23,20 @@
 		<property name="mapperLocations" value="classpath:mybatis/mapper/*Mapper.xml"/>
 		<!-- 装配数据源 -->
 		<property name="dataSource" ref="dataSource"/>
+		<!-- 【插件】配置PageHelper插件 -->
+		<property name="plugins">
+			<array>
+				<bean class="com.github.pagehelper.PageHelper">
+					<property name="properties">
+						<props>
+							<prop key="dialect">mysql</prop>
+							<!-- 配置自动修正页面，pageNum的有效范围：1~总页数 -->
+							<prop key="reasonable">true</prop>
+						</props>
+					</property>
+				</bean>
+			</array>
+		</property>
 	</bean>
 	<!-- 配置MyBatis扫描器 -->
 	<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">

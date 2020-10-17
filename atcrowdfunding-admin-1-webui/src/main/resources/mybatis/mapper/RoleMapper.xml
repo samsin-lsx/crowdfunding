@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.atguigu.crowd.funding.mapper.AdminMapper">
-	<resultMap id="BaseResultMap" type="com.atguigu.crowd.funding.entity.Admin">
+<mapper namespace="com.atguigu.crowd.funding.mapper.RoleMapper">
+	<resultMap id="BaseResultMap" type="com.atguigu.crowd.funding.entity.Role">
 		<id column="id" property="id" jdbcType="INTEGER" />
-		<result column="login_acct" property="loginAcct"
-			jdbcType="VARCHAR" />
-		<result column="user_pswd" property="userPswd"
-			jdbcType="VARCHAR" />
-		<result column="user_name" property="userName"
-			jdbcType="VARCHAR" />
-		<result column="email" property="email" jdbcType="VARCHAR" />
-		<result column="create_time" property="createTime"
-			jdbcType="CHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Example_Where_Clause">
 		<where>
@@ -78,26 +70,19 @@
 		</where>
 	</sql>
 	<sql id="Base_Column_List">
-		id, login_acct, user_pswd, user_name, email, create_time
+		id, name
 	</sql>
-
-	<!-- 分页查询用户数据 -->
-	<select id="selectAdminListByKeyword" resultMap="BaseResultMap">
-		SELECT 
-		<include refid="Base_Column_List" />
-		FROM T_ADMIN
-		WHERE LOGIN_ACCT LIKE CONCAT('%',#{keyword},'%') OR USER_NAME LIKE CONCAT('%',#{keyword},'%') OR EMAIL LIKE CONCAT('%',#{keyword},'%')
-		ORDER BY ID DESC
+	<select id="selectRoleForKeyword" resultMap="BaseResultMap">
+		SELECT ID,NAME FROM T_ROLE WHERE NAME LIKE CONCAT('%',#{keyword},'%')
 	</select>
-
 	<select id="selectByExample" resultMap="BaseResultMap"
-		parameterType="com.atguigu.crowd.funding.entity.AdminExample">
+		parameterType="com.atguigu.crowd.funding.entity.RoleExample">
 		select
 		<if test="distinct">
 			distinct
 		</if>
 		<include refid="Base_Column_List" />
-		from t_admin
+		from t_role
 		<if test="_parameter != null">
 			<include refid="Example_Where_Clause" />
 		</if>
@@ -109,103 +94,62 @@
 		parameterType="java.lang.Integer">
 		select
 		<include refid="Base_Column_List" />
-		from t_admin
+		from t_role
 		where id = #{id,jdbcType=INTEGER}
 	</select>
 	<delete id="deleteByPrimaryKey"
 		parameterType="java.lang.Integer">
-		delete from t_admin
+		delete from t_role
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
 	<delete id="deleteByExample"
-		parameterType="com.atguigu.crowd.funding.entity.AdminExample">
-		delete from t_admin
+		parameterType="com.atguigu.crowd.funding.entity.RoleExample">
+		delete from t_role
 		<if test="_parameter != null">
 			<include refid="Example_Where_Clause" />
 		</if>
 	</delete>
 	<insert id="insert"
-		parameterType="com.atguigu.crowd.funding.entity.Admin">
-		insert into t_admin (id, login_acct, user_pswd,
-		user_name, email, create_time
-		)
-		values (#{id,jdbcType=INTEGER}, #{loginAcct,jdbcType=VARCHAR},
-		#{userPswd,jdbcType=VARCHAR},
-		#{userName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{createTime,jdbcType=CHAR}
-		)
+		parameterType="com.atguigu.crowd.funding.entity.Role">
+		insert into t_role (id, name)
+		values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
 	</insert>
 	<insert id="insertSelective"
-		parameterType="com.atguigu.crowd.funding.entity.Admin">
-		insert into t_admin
+		parameterType="com.atguigu.crowd.funding.entity.Role">
+		insert into t_role
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
 				id,
 			</if>
-			<if test="loginAcct != null">
-				login_acct,
-			</if>
-			<if test="userPswd != null">
-				user_pswd,
-			</if>
-			<if test="userName != null">
-				user_name,
-			</if>
-			<if test="email != null">
-				email,
-			</if>
-			<if test="createTime != null">
-				create_time,
+			<if test="name != null">
+				name,
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
 				#{id,jdbcType=INTEGER},
 			</if>
-			<if test="loginAcct != null">
-				#{loginAcct,jdbcType=VARCHAR},
-			</if>
-			<if test="userPswd != null">
-				#{userPswd,jdbcType=VARCHAR},
-			</if>
-			<if test="userName != null">
-				#{userName,jdbcType=VARCHAR},
-			</if>
-			<if test="email != null">
-				#{email,jdbcType=VARCHAR},
-			</if>
-			<if test="createTime != null">
-				#{createTime,jdbcType=CHAR},
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
 	<select id="countByExample"
-		parameterType="com.atguigu.crowd.funding.entity.AdminExample"
+		parameterType="com.atguigu.crowd.funding.entity.RoleExample"
 		resultType="java.lang.Integer">
-		select count(*) from t_admin
+		select count(*) from t_role
 		<if test="_parameter != null">
 			<include refid="Example_Where_Clause" />
 		</if>
 	</select>
 	<update id="updateByExampleSelective" parameterType="map">
-		update t_admin
+		update t_role
 		<set>
 			<if test="record.id != null">
 				id = #{record.id,jdbcType=INTEGER},
 			</if>
-			<if test="record.loginAcct != null">
-				login_acct = #{record.loginAcct,jdbcType=VARCHAR},
-			</if>
-			<if test="record.userPswd != null">
-				user_pswd = #{record.userPswd,jdbcType=VARCHAR},
-			</if>
-			<if test="record.userName != null">
-				user_name = #{record.userName,jdbcType=VARCHAR},
-			</if>
-			<if test="record.email != null">
-				email = #{record.email,jdbcType=VARCHAR},
-			</if>
-			<if test="record.createTime != null">
-				create_time = #{record.createTime,jdbcType=CHAR},
+			<if test="record.name != null">
+				name = #{record.name,jdbcType=VARCHAR},
 			</if>
 		</set>
 		<if test="_parameter != null">
@@ -213,47 +157,27 @@
 		</if>
 	</update>
 	<update id="updateByExample" parameterType="map">
-		update t_admin
+		update t_role
 		set id = #{record.id,jdbcType=INTEGER},
-		login_acct = #{record.loginAcct,jdbcType=VARCHAR},
-		user_pswd = #{record.userPswd,jdbcType=VARCHAR},
-		user_name = #{record.userName,jdbcType=VARCHAR},
-		email = #{record.email,jdbcType=VARCHAR},
-		create_time = #{record.createTime,jdbcType=CHAR}
+		name = #{record.name,jdbcType=VARCHAR}
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
 		</if>
 	</update>
 	<update id="updateByPrimaryKeySelective"
-		parameterType="com.atguigu.crowd.funding.entity.Admin">
-		update t_admin
+		parameterType="com.atguigu.crowd.funding.entity.Role">
+		update t_role
 		<set>
-			<if test="loginAcct != null">
-				login_acct = #{loginAcct,jdbcType=VARCHAR},
-			</if>
-			<if test="userPswd != null">
-				user_pswd = #{userPswd,jdbcType=VARCHAR},
-			</if>
-			<if test="userName != null">
-				user_name = #{userName,jdbcType=VARCHAR},
-			</if>
-			<if test="email != null">
-				email = #{email,jdbcType=VARCHAR},
-			</if>
-			<if test="createTime != null">
-				create_time = #{createTime,jdbcType=CHAR},
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
 			</if>
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 	<update id="updateByPrimaryKey"
-		parameterType="com.atguigu.crowd.funding.entity.Admin">
-		update t_admin
-		set login_acct = #{loginAcct,jdbcType=VARCHAR},
-		user_pswd = #{userPswd,jdbcType=VARCHAR},
-		user_name = #{userName,jdbcType=VARCHAR},
-		email = #{email,jdbcType=VARCHAR},
-		create_time = #{createTime,jdbcType=CHAR}
+		parameterType="com.atguigu.crowd.funding.entity.Role">
+		update t_role
+		set name = #{name,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 </mapper>

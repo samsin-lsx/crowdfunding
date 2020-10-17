@@ -6,25 +6,32 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface AdminMapper {
-    int countByExample(AdminExample example);
+	int countByExample(AdminExample example);
 
-    int deleteByExample(AdminExample example);
+	int deleteByExample(AdminExample example);
 
-    int deleteByPrimaryKey(Integer id);
+	int deleteByPrimaryKey(Integer id);
 
-    int insert(Admin record);
+	int insert(Admin record);
 
-    int insertSelective(Admin record);
+	int insertSelective(Admin record);
 
-    List<Admin> selectByExample(AdminExample example);
+	List<Admin> selectByExample(AdminExample example);
 
-    Admin selectByPrimaryKey(Integer id);
+	Admin selectByPrimaryKey(Integer id);
 
-    int updateByExampleSelective(@Param("record") Admin record, @Param("example") AdminExample example);
+	int updateByExampleSelective(@Param("record") Admin record, @Param("example") AdminExample example);
 
-    int updateByExample(@Param("record") Admin record, @Param("example") AdminExample example);
+	int updateByExample(@Param("record") Admin record, @Param("example") AdminExample example);
 
-    int updateByPrimaryKeySelective(Admin record);
+	int updateByPrimaryKeySelective(Admin record);
 
-    int updateByPrimaryKey(Admin record);
+	int updateByPrimaryKey(Admin record);
+
+	/**
+	 * 分页查询用户数据
+	 * @param keyword
+	 * @return
+	 */
+	public List<Admin> selectAdminListByKeyword(String keyword);
 }
