@@ -14,8 +14,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<i class="glyphicon glyphicon-th-list"></i> 权限菜单列表
-						<div style="float: right; cursor: pointer;" data-toggle="modal"
-							data-target="#myModal">
+						<div style="float: right; cursor: pointer;" data-toggle="modal" data-target="#myModal">
 							<i class="glyphicon glyphicon-question-sign"></i>
 						</div>
 					</div>
