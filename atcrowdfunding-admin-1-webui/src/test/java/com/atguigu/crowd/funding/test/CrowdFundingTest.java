@@ -18,13 +18,19 @@ import com.atguigu.crowd.funding.mapper.AdminMapper;
 import com.atguigu.crowd.funding.mapper.RoleMapper;
 import com.atguigu.crowd.funding.service.api.AdminService;
 
+/**
+ * 测试类
+ * 
+ * @author lishangxing
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring-persist-mybatis.xml", "classpath:spring-persist-tx.xml"})
+@ContextConfiguration(locations = { "classpath:spring-persist-mybatis.xml", "classpath:spring-persist-tx.xml" })
 public class CrowdFundingTest {
 	@Autowired
 	private DataSource dataSource;
 	@Autowired
 	private AdminService adminService;
+
 	@Autowired
 	private AdminMapper adminMapper;
 	@Autowired
@@ -36,7 +42,7 @@ public class CrowdFundingTest {
 			this.roleMapper.insert(new Role(null, "role - " + x));
 		}
 	}
-	
+
 	@Test
 	public void testInsertAdmin() {
 		for (int x = 0; x < 500; x++) {
@@ -51,7 +57,7 @@ public class CrowdFundingTest {
 			System.out.println(admin);
 		}
 	}
-	
+
 	@Test
 	public void testMyBatisGetAll() {
 		List<Admin> adminList = this.adminService.getAll();
@@ -59,7 +65,7 @@ public class CrowdFundingTest {
 			System.out.println(admin);
 		}
 	}
-	
+
 	@Test
 	public void testConnection() throws SQLException {
 		Connection connection = this.dataSource.getConnection();
