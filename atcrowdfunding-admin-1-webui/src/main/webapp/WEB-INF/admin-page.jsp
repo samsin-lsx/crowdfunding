@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="UTF-8">
@@ -65,9 +64,7 @@
 												<td>${admin.userName }</td>
 												<td>${admin.email }</td>
 												<td>
-													<button type="button" class="btn btn-success btn-xs">
-														<i class=" glyphicon glyphicon-check"></i>
-													</button>
+													<a href="assign/to/assign/role/page.html?adminId=${admin.id }&pageNum=${requestScope['PAGE-INFO'].pageNum }" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></a>
 													<a href="admin/to/edit/page.html?adminId=${admin.id }&pageNum=${requestScope['PAGE-INFO'].pageNum }" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></a>
 													<button type="button" class="btn btn-danger btn-xs uniqueRemoveBtn" adminId="${admin.id }" style="outline: none;">
 														<i class=" glyphicon glyphicon-remove"></i>

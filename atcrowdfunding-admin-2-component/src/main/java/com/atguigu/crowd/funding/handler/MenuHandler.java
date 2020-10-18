@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +17,30 @@ import com.atguigu.crowd.funding.service.api.MenuService;
 public class MenuHandler {
 	@Autowired
 	private MenuService menuService;
+	
+	@RequestMapping("/menu/remove")
+	public ResultEntity<String> removeMenu(Menu menu) {
+		this.menuService.updateRemove(menu.getId());
+		return ResultEntity.successWithoutData();
+	}
+	
+	@RequestMapping("/menu/update")
+	public ResultEntity<String> updateMenu(Menu menu) {
+		this.menuService.updateMenu(menu);
+		return ResultEntity.successWithoutData();
+	}
+	
+	@RequestMapping("/menu/get/{menuId}")
+	public ResultEntity<Menu> getMenuById(@PathVariable("menuId") Integer menuId) {
+		Menu menu = this.menuService.getMenuById(menuId);
+		return ResultEntity.successWithData(menu);
+	}
+	
+	@RequestMapping("/menu/save")
+	public ResultEntity<String> saveMenu(Menu menu) {
+		this.menuService.saveMenu(menu);
+		return ResultEntity.successWithoutData();
+	}
 	
 	@RequestMapping("/menu/get/whole/tree")
 	public ResultEntity<Menu> getWholeTree() {

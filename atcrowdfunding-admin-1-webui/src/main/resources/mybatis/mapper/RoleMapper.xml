@@ -5,6 +5,25 @@
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
 	</resultMap>
+	
+	<delete id="deleteOldAdminRoleRelationship">
+		DELETE FROM INNER_ADMIN_ROLE WHERE ADMIN_ID=#{adminId}
+	</delete>
+	
+	<insert id="insertNewAdminRoleRelationship">
+		INSERT INTO INNER_ADMIN_ROLE(ADMIN_ID, ROLE_ID) 
+		VALUES 
+		<foreach collection="roleIdList" item="roleId" separator=",">(#{adminId}, #{roleId})</foreach>
+	</insert>
+	
+	<select id="selectAssignedRoleList" resultMap="BaseResultMap">
+		SELECT R.ID,R.`NAME` FROM T_ROLE R LEFT JOIN INNER_ADMIN_ROLE AR ON R.ID=AR.ROLE_ID WHERE AR.ADMIN_ID=#{adminId}
+	</select>
+	
+	<select id="selectUnAssignRoleList" resultMap="BaseResultMap">
+		SELECT ID,`NAME` FROM T_ROLE WHERE ID NOT IN(SELECT ROLE_ID FROM INNER_ADMIN_ROLE WHERE ADMIN_ID=#{adminId})
+	</select>
+	
 	<sql id="Example_Where_Clause">
 		<where>
 			<foreach collection="oredCriteria" item="criteria"

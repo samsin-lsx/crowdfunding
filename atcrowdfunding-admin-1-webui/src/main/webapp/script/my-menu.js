@@ -89,3 +89,45 @@ function generateBtnGrp(treeNode) {
 	}
 	return $span;
 }
+
+// 点击添加按钮时打开新增菜单模态框
+function showConfirmAddModal(currentBtn) {
+	$("#menuAddModal").modal("show"); // 打开新增菜单的模态框
+	window.menuId = currentBtn.id; // 将当前按钮的id存入全局变量中
+}
+
+// 点击更新按钮时打开更新菜单模态框
+function showConfirmEditModal(currentBtn) {
+	$("#menuEditModal").modal("show");
+	window.menuId = currentBtn.id; // 将当前按钮的id存入全局变量中
+	// 回显数据
+	$.ajax({
+		"url": "menu/get/" + window.menuId + ".json",
+		"type": "get",
+		"dataType": "json",
+		"success": function(response) {
+			var result = response.result;
+			if (result == "SUCCESS") {
+				var menu = response.data;
+				var name = menu.name;
+				var url = menu.url;
+				var icon = menu.icon;
+				$("#menuEditModal [name='name']").val(name);
+				$("#menuEditModal [name='url']").val(url);
+				$("#menuEditModal [name='icon'][value='" + icon + "']").attr("checked", true);
+			}
+			if (result == "FAILED") {
+				layer.msg(response.message);
+			}
+		},
+		"error": function(response) {
+			layer.msg(response.message);
+		}
+	});
+}
+
+//点击删除按钮时打开删除菜单模态框提示
+function showConfirmRemoveModal(currentBtn) {
+	$("#menuConfirmModal").modal("show"); // 打开新增菜单的模态框
+	window.menuId = currentBtn.id; // 将当前按钮的id存入全局变量中
+}

@@ -39,4 +39,27 @@ public interface RoleService {
 	 * @param role 包含id、name的角色对象
 	 */
 	public void editRole(Role role);
+
+	/**
+	 * 查询已分配的角色数据
+	 * @param adminId 用户ID
+	 * @return 对应的已分配角色信息
+	 */
+	public List<Role> getAssignedRoleList(Integer adminId);
+
+	/**
+	 * 查询未分配的角色数据
+	 * @param adminId 用户ID
+	 * @return 对应的未分配角色信息
+	 */
+	public List<Role> getUnAssignedRoleList(Integer adminId);
+
+	/**
+	 * 执行分配角色
+	 * <li>1、删除之前关联的角色数据</li>
+	 * <li>2、保存现在选择关联的角色数据</li>
+	 * @param adminId 指定用户ID
+	 * @param roleIdList 角色ID数据
+	 */
+	public void updateRelationship(Integer adminId, List<Integer> roleIdList);
 }

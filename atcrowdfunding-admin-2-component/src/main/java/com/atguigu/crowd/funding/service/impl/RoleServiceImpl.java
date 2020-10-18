@@ -9,6 +9,7 @@ import com.atguigu.crowd.funding.entity.Role;
 import com.atguigu.crowd.funding.entity.RoleExample;
 import com.atguigu.crowd.funding.mapper.RoleMapper;
 import com.atguigu.crowd.funding.service.api.RoleService;
+import com.atguigu.crowd.funding.util.CrowdFundingUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -49,6 +50,26 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public void editRole(Role role) {
 		this.roleMapper.updateByPrimaryKey(role);
+	}
+
+	@Override
+	public List<Role> getAssignedRoleList(Integer adminId) {
+		return this.roleMapper.selectAssignedRoleList(adminId);
+	}
+
+	@Override
+	public List<Role> getUnAssignedRoleList(Integer adminId) {
+		return this.roleMapper.selectUnAssignRoleList(adminId);
+	}
+
+	@Override
+	public void updateRelationship(Integer adminId, List<Integer> roleIdList) {
+		// 1、删除之前关联的角色数据
+		this.roleMapper.deleteOldAdminRoleRelationship(adminId);
+		// 2、保存现在选择关联的角色数据
+		if (CrowdFundingUtils.collectionEffective(roleIdList)) {
+			this.roleMapper.insertNewAdminRoleRelationship(adminId, roleIdList);
+		}
 	}
 
 }
