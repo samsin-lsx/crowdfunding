@@ -31,7 +31,7 @@
 						<button id="batchRemoveBtn" type="button" class="btn btn-danger" style="float: right; margin-left: 10px; outline: none;">
 							<i class="glyphicon glyphicon-remove"></i> 批量删除
 						</button>
-						<button id="addBtn" type="button" class="btn btn-primary" style="float: right; outline: none;"">
+						<button id="addBtn" type="button" class="btn btn-primary" style="float: right; outline: none;">
 							<i class="glyphicon glyphicon-plus"></i> 新增
 						</button>
 						<br>
