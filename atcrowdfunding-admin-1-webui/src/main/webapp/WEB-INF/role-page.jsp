@@ -2,9 +2,10 @@
 <!DOCTYPE html>
 <html lang="UTF-8">
 <head>
-	<%@ include file="/WEB-INF/include-head.jsp"%>
+<%@ include file="/WEB-INF/include-head.jsp"%>
 <!-- 导入Pagination导航条插件 -->
 <link rel="stylesheet" href="css/pagination.css"/>
+<link rel="stylesheet" href="ztree/zTreeStyle.css"/>
 </head>
 <body>
 	<%@ include file="/WEB-INF/include-nav.jsp"%>
@@ -65,7 +66,9 @@
 	<%@ include file="/WEB-INF/include-modal-role-confirm.jsp" %>
 	<%@ include file="/WEB-INF/include-modal-role-add.jsp" %>
 	<%@ include file="/WEB-INF/include-modal-role-edit.jsp" %>
+	<%@ include file="/WEB-INF/include-modal-assign-auth.jsp" %>
 	
+	<script type="text/javascript" src="ztree/jquery.ztree.all-3.5.min.js"></script>
 	<script type="text/javascript" src="script/jquery.pagination.js"></script>
 	<script type="text/javascript" src="script/my-role.js"></script>
 	<script type="text/javascript">
@@ -195,6 +198,7 @@
 				$("#editModal").modal("show");
 				window.roleId = $(this).attr("roleId");
 			});
+			
 			$("#editModalBtn").click(function() {
 				var roleName = $.trim($("#roleNameInputEdit").val());
 				if (roleName == null || roleName == "") {
@@ -224,6 +228,97 @@
 						layer.msg(response.message);
 					}
 				});
+			});
+			
+			$("#roleTableBody").on("click", ".checkBtn", function() {
+				// 将角色ID存入到全局变量中
+				window.roleId = $(this).attr("roleId");
+				$("#roleAssignAuthModal").modal("show");
+				// 1、创建setting对象
+				var setting = {
+						"data": {
+							"simpleData": {
+								"enable": true,
+								"pIdKey": "categoryId"
+							},
+							"key": {
+								"name": "title"
+							}
+						},
+						"check": { // 显示多选框
+							"enable": true
+						}
+				};
+				// 2、获取权限数据
+				var ajaxResult = $.ajax({
+					"url": "assign/get/all/auth.json",
+					"type": "post",
+					"dataType": "json",
+					"async": false
+				});
+				if (ajaxResult.responseJSON.result == "FAILED") {
+					layer.msg(ajaxResult.responseJSON.message);
+					return;
+				}
+				var zNodes = ajaxResult.responseJSON.data;
+				// 3、初始化树形结构
+				$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+				// 4、将树形结构展开
+				$.fn.zTree.getZTreeObj("treeDemo").expandAll(true);
+				// 5、继续查询指定角色对应的权限数据ID
+				var ajaxResult = $.ajax({
+					"url": "assign/get/assigned/auth/id/list.json",
+					"type": "post",
+					"data": {
+						"roleId": $(this).attr("roleId"),
+						"random": Math.random
+					},
+					"dataType": "json",
+					"async": false
+				});
+				if (ajaxResult.responseJSON.result == "FAILED") {
+					layer.msg(ajaxResult.responseJSON.message);
+					return;
+				}
+				var authIdList = ajaxResult.responseJSON.data;
+				for (var x = 0; x < authIdList.length; x++) {
+					var authId = authIdList[x];
+					var key = "id"; // 节点的属性名
+					var treeNode = $.fn.zTree.getZTreeObj("treeDemo").getNodeByParam(key, authId); // authId表示节点的属性值
+					// treeNode表示要勾选的节点、true表示勾选状态、false表示不联动
+					$.fn.zTree.getZTreeObj("treeDemo").checkNode(treeNode, true, false);
+				}
+			});
+			
+			// 分配权限
+			$("#roleAssignAuthBtn").click(function() {
+				var authIdArray = new Array();
+				// 获取当前zTree中已经选中的节点
+				var checkedNodes = $.fn.zTree.getZTreeObj("treeDemo").getCheckedNodes();
+				for (var x = 0; x < checkedNodes.length; x++) {
+					var node = checkedNodes[x];
+					var authId = node.id; // 获取当前节点的属性ID
+					authIdArray.push(authId); // 将authId存入数组中
+				}
+				var requestBody = {
+					"roleIdList": [window.roleId],
+					"authIdList": authIdArray
+				};
+				var ajaxResult = $.ajax({
+					"url": "assign/do/assign.json",
+					"type": "post",
+					"data": JSON.stringify(requestBody),
+					"dataType": "json",
+					"contentType": "application/json;charset=UTF-8",
+					"async": false
+				});
+				if (ajaxResult.responseJSON.result == "SUCCESS") {
+					layer.msg("分配权限成功！");
+				}
+				if (ajaxResult.responseJSON.result == "FAILED") {
+					layer.msg(ajaxResult.responseJSON.message);
+				}
+				$("#roleAssignAuthModal").modal("hide"); // 关闭模态框
 			});
 		});
 	</script>

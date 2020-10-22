@@ -49,7 +49,7 @@ function generateTableBody(pageInfo) {
 	}
 	for (var i = 0; i < list.length; i++) {
 		var role = list[i];
-		var checkBtn = "<button type='button' title='分配权限' class='btn btn-success btn-xs' style='outline: none;'><i class=' glyphicon glyphicon-check'></i></button>";
+		var checkBtn = "<button type='button' roleId='" + role.id + "' title='分配权限' class='btn btn-success btn-xs checkBtn' style='outline: none;'><i class=' glyphicon glyphicon-check'></i></button>";
 		var pencilBtn = "<button type='button' roleId='" + role.id + "' class='btn btn-primary btn-xs editBtn' style='outline: none;'><i class='glyphicon glyphicon-pencil'></i></button>";
 		var removeBtn = "<button type='button' roleId='" + role.id + "' class='btn btn-danger btn-xs removeBtn' style='outline: none;'><i class='glyphicon glyphicon-remove'></i></button>";
 		var numberTd = "<td>" + (i + 1) + "</td>";
