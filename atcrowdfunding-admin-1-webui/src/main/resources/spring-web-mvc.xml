@@ -7,7 +7,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	<!-- 配置自动扫描的包请求 -->
-	<context:component-scan base-package="com.atguigu.crowd.funding.handler,com.atguigu.crowd.funding.exception"/>
+	<context:component-scan base-package="com.atguigu.crowd.funding.handler,com.atguigu.crowd.funding.exception,com.atguigu.crowd.funding.config"/>
 	<!-- 配置SpringMVC注解驱动 -->
 	<mvc:annotation-driven />
 	<!-- 配置视图解析器 -->
@@ -26,8 +26,8 @@
 	<!-- 菜单模块 -->
 	<mvc:view-controller path="/menu/to/page.html" view-name="menu-page"/>
 	
-	<!-- 配置拦截器 -->
-	<mvc:interceptors>
+	<!-- 登录配置拦截器 -->
+	<!-- <mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/admin/to/login/page.html"/>
@@ -36,5 +36,5 @@
 			<mvc:exclude-mapping path="/admin/logout.html"/>
 			<bean class="com.atguigu.crowd.funding.interceptor.LoginInterceptor"/>
 		</mvc:interceptor>
-	</mvc:interceptors>
+	</mvc:interceptors> -->
 </beans>

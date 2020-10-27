@@ -3,22 +3,23 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
+	<!-- 加入SpringSecurity之后需要将ContextLoaderListener取消 -->
 	<!-- 配置Spring容器 -->
-	<context-param>
+	<!-- <context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:spring-persist-*.xml</param-value>
 	</context-param>
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-	
+	</listener> -->
+
 	<!-- 配置SpringMVC -->
 	<servlet>
 		<servlet-name>springDispatcherServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:spring-web-mvc.xml</param-value>
+			<param-value>classpath:spring-*.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
@@ -27,7 +28,7 @@
 		<url-pattern>*.html</url-pattern>
 		<url-pattern>*.json</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- 配置字符编码过滤器 -->
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
@@ -47,6 +48,16 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- SpringSecurity过滤器配置 -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 </web-app>

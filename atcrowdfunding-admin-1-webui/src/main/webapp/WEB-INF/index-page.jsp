@@ -940,7 +940,7 @@ h3.break>a {
 								rel="nofollow" href="http://www.atguigu.com">网站地图</a> | <a
 								rel="nofollow" href="http://www.atguigu.com">联系我们</a>
 						</div>
-						<div class="copyRight">Copyright ?2017-2017atguigu.com 版权所有
+						<div class="copyRight">Copyright @ 2020-2021 www.samsin.org 版权所有
 						</div>
 					</div>
 
