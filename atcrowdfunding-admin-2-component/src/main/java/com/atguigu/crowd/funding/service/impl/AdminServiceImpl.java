@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.atguigu.crowd.funding.entity.Admin;
@@ -18,6 +19,8 @@ import com.github.pagehelper.PageInfo;
 public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private AdminMapper adminMapper;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public List<Admin> getAll() {
@@ -66,7 +69,8 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public void saveAdmin(Admin admin) {
-		admin.setUserPswd(CrowdFundingUtils.md5(admin.getUserPswd())); // 密码进行MD5加密
+//		admin.setUserPswd(CrowdFundingUtils.md5(admin.getUserPswd())); // 密码进行MD5加密
+		admin.setUserPswd(passwordEncoder.encode(admin.getUserPswd())); // 密码进行MD5加密
 		this.adminMapper.insert(admin);
 	}
 
@@ -77,7 +81,8 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override
 	public void updateAdmin(Admin admin) {
-		admin.setUserPswd(CrowdFundingUtils.md5(admin.getUserPswd()));
+//		admin.setUserPswd(CrowdFundingUtils.md5(admin.getUserPswd()));
+		admin.setUserPswd(passwordEncoder.encode(admin.getUserPswd()));
 		this.adminMapper.updateByPrimaryKey(admin);
 	}
 

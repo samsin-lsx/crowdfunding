@@ -23,5 +23,6 @@ public class CrowdFundingConstant {
 		EXCEPTION_MESSAGE_MAP.put("java.lang.ArithmeticException", "算术异常！");
 		EXCEPTION_MESSAGE_MAP.put("java.lang.RuntimeException", "运行时异常！");
 		EXCEPTION_MESSAGE_MAP.put("com.atguigu.crowd.funding.LoginException", "登录异常！");
+		EXCEPTION_MESSAGE_MAP.put("org.springframework.security.access.AccessDeniedException", "访问权限不足，请联系管理员！");
 	}
 }

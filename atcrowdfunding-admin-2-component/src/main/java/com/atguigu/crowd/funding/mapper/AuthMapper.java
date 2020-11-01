@@ -47,4 +47,11 @@ public interface AuthMapper {
 	 * @param authIdList 权限ID数据集合
 	 */
 	public void insertNewRelationShip(@Param("roleId") Integer roleId, @Param("authIdList") List<Integer> authIdList);
+
+	/**
+	 * 根据用户ID查询对应的角色信息，而后再查询对应的权限信息
+	 * @param id 用户ID
+	 * @return 角色对应的权限集合
+	 */
+	public List<Auth> selectAuthListByAdminId(Integer id);
 }

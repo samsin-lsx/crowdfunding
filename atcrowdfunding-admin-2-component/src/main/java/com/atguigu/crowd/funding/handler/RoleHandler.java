@@ -3,6 +3,7 @@ package com.atguigu.crowd.funding.handler;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,6 +50,7 @@ public class RoleHandler {
 		return ResultEntity.successWithData(roleList);
 	}
 	
+	@PreAuthorize("hasAuthority('role:get')") // 使用SpEL表达式配置权限
 	@RequestMapping("/role/search/by/keyword")
 //	@ResponseBody
 	public ResultEntity<PageInfo<Role>> search(

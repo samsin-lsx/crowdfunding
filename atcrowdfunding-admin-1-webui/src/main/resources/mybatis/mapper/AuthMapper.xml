@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.atguigu.crowd.funding.mapper.AuthMapper">
-	<resultMap id="BaseResultMap"
-		type="com.atguigu.crowd.funding.entity.Auth">
+	<resultMap id="BaseResultMap" type="com.atguigu.crowd.funding.entity.Auth">
 		<id column="ID" property="id" jdbcType="INTEGER" />
 		<result column="NAME" property="name" jdbcType="VARCHAR" />
 		<result column="TITLE" property="title" jdbcType="VARCHAR" />
-		<result column="CATEGORY_ID" property="categoryId"
-			jdbcType="INTEGER" />
+		<result column="CATEGORY_ID" property="categoryId" jdbcType="INTEGER" />
 	</resultMap>
+	<!-- 根据用户ID查询对应的角色信息，而后再查询对应的权限信息 -->
+	<select id="selectAuthListByAdminId" resultMap="BaseResultMap">
+		SELECT A.ID,A.NAME
+		FROM T_AUTH A 
+		LEFT JOIN INNER_ROLE_AUTH RA ON A.ID=RA.AUTH_ID
+		LEFT JOIN INNER_ADMIN_ROLE AR ON RA.ROLE_ID=AR.ROLE_ID
+		WHERE AR.ADMIN_ID=#{adminId}
+	</select>
 	<!-- 删除旧的角色权限关系表的数据 -->
 	<delete id="deleteOldRelationShip">
 		DELETE FROM INNER_ROLE_AUTH WHERE ROLE_ID=#{roleId}
